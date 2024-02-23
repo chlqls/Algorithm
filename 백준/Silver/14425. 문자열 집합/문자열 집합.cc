@@ -9,13 +9,13 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    int N, M;
+    int n, m;
 
     //입력
-    cin >> N >> M;
+    cin >> n >> m;
     set<string> S;
 
-    for(int i = 0; i < N; i++) {
+    for(int i = 0; i < n; i++) {
         string str;
         cin >> str;
         S.insert(str);
@@ -23,7 +23,7 @@ int main() {
 
     //연산
     int result = 0;
-    for(int j = 0; j < M; j++) {
+    for(int j = 0; j < m; j++) {
         string str;
         cin >> str;
         auto iter = S.find(str); //M개의 문자열이 집합 S에 포함되어있는지 확인
