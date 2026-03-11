@@ -5,27 +5,20 @@ using namespace std;
 
 int main() {
 
-    int N = 10;
+    vector<int> count(42, 0);
 
-    int a, total = 10;
+    int a, result = 0;
 
-    vector<int> arr(N);
-    vector<int> remain(N, 0);
 
-    for (int i = 0; i < arr.size(); i++) {
+    for (int i = 0; i < 10; i++) {
         cin >> a;
-        arr[i] = a;
-        remain[i] = arr[i] % 42;
+        count[a % 42]++;
     }
 
-    for (int i = 0; i < remain.size(); i++) {
-        for (int j = i + 1; j < remain.size(); j++) {
-            if (remain[i] == remain[j]) {
-                total--;
-                break;
-            }
+    for (int a : count) {
+        if (a > 0) {
+            result++;
         }
     }
-
-    cout << total;
+    cout << result << endl;
 }
