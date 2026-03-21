@@ -8,29 +8,30 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
 
-    int n, x, i = 0, num = 1;
+    int n, x, num = 1;
 
     cin >> n;
 
-    vector<char> ans(2 * n);
+    vector<char> ans;
 
     stack<int> s;
 
     while (n--) {
         cin >> x;
 
-        if (!s.empty() && x < s.top()) {
+        while (num <= x) {
+            s.push(num++);
+            ans.push_back('+');
+        }
+
+        if (x == s.top()) {
+            s.pop();
+            ans.push_back('-');
+        }
+        else {
             cout << "NO" << '\n';
             return 0;
         }
-
-        while (s.empty() || x != s.top()) {
-            s.push(num++);
-            ans[i++] = '+';
-        }
-        s.pop();
-        ans[i++] = '-';
-
     }
 
     for (char v : ans) {
