@@ -1,52 +1,47 @@
 #include <iostream>
 #include <queue>
+#include <vector>
 
 using namespace std;
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
-
-    int n, x, N, M;
-
+    int n;
     cin >> n;
-    
-    for (int i = 0; i < n; i++) {
+
+    while (n--) {
+        int N, M;
         cin >> N >> M;
 
-        int target, result = 0;
         queue<pair<int, int>> q;
-        vector<int> cnt(9, 0);
+        priority_queue<int> pq; // 중요도를 내림차순으로 자동 정렬
 
-        for (int j = 0; j < N; j++) {
-            cin >> x;
-            q.push({ x, j });
-            cnt[x - 1]++;
-            if (j == M) {
-                target = x;
-            }
+        for (int i = 0; i < N; i++) {
+            int priority;
+            cin >> priority;
+            q.push({ priority, i });
+            pq.push(priority);
         }
 
-        for (int j = 9; j >= target; j--) {
-            int c = cnt[j - 1];
-            while (c) {
-                if (q.front().first == j) {
-                    c--;
-                    result++;
-                    if (j == target && q.front().second == M) {
-                        break;
-                    }
-                    q.pop();
-                }
-                else {
-                    q.push(q.front());
-                    q.pop();
+        int count = 0;
+        while (!q.empty()) {
+            int currentP = q.front().first;
+            int currentIndex = q.front().second;
+            q.pop();
+
+            // 현재 문서가 가장 높은 중요도인지 확인
+            if (pq.top() == currentP) {
+                count++;
+                pq.pop(); // 인쇄 완료
+                if (currentIndex == M) {
+                    cout << count << "\n";
+                    break;
                 }
             }
+            else {
+                // 중요도가 낮으면 맨 뒤로 다시 보냄
+                q.push({ currentP, currentIndex });
+            }
         }
-        
-        cout << result << '\n';
     }
-
     return 0;
 }
