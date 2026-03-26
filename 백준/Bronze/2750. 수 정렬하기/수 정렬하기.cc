@@ -3,33 +3,30 @@
 
 using namespace std;
 
-void bubblesort(vector<int> &arr) {
-    for(int i = 0; i < arr.size() - 1; i++) {
-        for(int j = 0; j < arr.size() - i - 1; j++) {
-            if(arr[j] > arr[j + 1]) {
-                swap(arr[j], arr[j + 1]);
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int N;
+    cin >> N;
+
+    vector<int> v(N);
+
+    for (int i = 0; i < N; i++) {
+        cin >> v[i];
+    }
+
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N - i - 1; j++) {
+            if (v[j] > v[j + 1]) {
+                swap(v[j], v[j + 1]);
             }
         }
     }
-}
-int main() {
-    int n;
 
-    //입력
-    cin >> n;
-    vector<int> arr(n);
-
-    for(int i = 0; i < n; i++) {
-        cin >> arr[i];
+    for (int a : v) {
+        cout << a << '\n';
     }
-
-    //연산
-    bubblesort(arr);
-
-    //출력
-    for(int i = 0; i < n; i++) {
-        cout << arr[i] << '\n';
-    }
-
+    
     return 0;
 }
