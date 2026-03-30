@@ -1,48 +1,48 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <cctype>
 
 using namespace std;
 
-int sum(string str) {
-    int result = 0;
-    for(int i = 0; i< str.length(); i++) {
-        if(isdigit(str[i])) {
-            result += int(str[i]) - 48;
-        }
+bool customSort(pair<string, int> a, pair<string, int> b) {
+    if (a.first.length() != b.first.length()) {
+        return a.first.length() < b.first.length();
     }
-    return result;
-}
-
-bool cmp(const string str1, const string str2) {
-    if(str1.length() != str2.length()) {
-        return str1.length() < str2.length();
+    else if (a.second != b.second) {
+        return a.second < b.second;
     }
-    int sum1 = sum(str1);
-    int sum2 = sum(str2);
-    if(sum1 != sum2) {
-        return sum1 < sum2;
-    }return str1 < str2;
+    return a.first < b.first;
 }
 
 int main() {
-    int n;
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
 
-    //입력
-    cin >> n;
-    vector<string> arr(n);
+    int N;
+    string s;
+    cin >> N;
+
+    vector<pair<string, int>> arr(N);
+
+    for(int i = 0; i< N; i++) {
+        int  sum = 0;
+        cin >> s;
+
+        for (int j = 0; j < s.length(); j++) {
+            if (isdigit(s.at(j))) {
+                sum += s.at(j) - '0';
+            }
+        }
+        arr[i].first = s;
+        arr[i].second = sum;
+    }
+
+    sort(arr.begin(), arr.end(), customSort);
+
+    for (int i = 0; i < N; i++) {
+        cout << arr[i].first << '\n';
+    }
     
-    for(int i = 0; i < n; i++) {
-        cin >> arr[i];
-    }
-
-    //연산
-    sort(arr.begin(), arr.end(), cmp);
-
-    //출력
-    for(int i = 0; i < n; i++) {
-        cout << arr[i] << '\n';
-    }
-
     return 0;
 }
