@@ -12,46 +12,42 @@ struct Country {
 // 비교 함수 정의
 bool customSort(Country a, Country b) {
     if (a.gold != b.gold) {
-        return a.gold < b.gold;
+        return a.gold > b.gold;
     }
     else if (a.silver != b.silver) {
-        return a.silver < b.silver;
+        return a.silver > b.silver;
     }
-    return a.bronze < b.bronze;
+    return a.bronze > b.bronze;
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
 
-    int N, K, rank = 1, index;
+    int N, K, index = 0;
     cin >> N >> K;
 
     vector<Country> arr(N);
 
     for(int i = 0; i < N; i++) {
-        cin >> arr[i].code;
-        cin >> arr[i].gold;
-        cin >> arr[i].silver;
-        cin >> arr[i].bronze;
+        cin >> arr[i].code >> arr[i].gold >> arr[i].silver >> arr[i].bronze;
     }
 
     // 다중 조건 정렬
     sort(arr.begin(), arr.end(), customSort);
-    
+
+    // K의 위치 찾기
     for (int i = 0; i < N; i++) {
-        rank++;
         if (arr[i].code == K) {
-            index = i;
-            break;
+            // K와 메달 구성이 완벽하게 똑같은 첫 번째 나라가 몇 번째 인덱스에 있는지를 확인
+            for (int j = 0; j <= i; j++) {
+                if (arr[j].gold == arr[i].gold && arr[j].silver == arr[i].silver && arr[j].bronze == arr[i].bronze) {
+                    cout << j + 1 << '\n';
+                    break;
+                }
+            }
         }
     }
-    for (int i = 0; i < N; i++) {
-        if (arr[i].gold == arr[index].gold && arr[i].silver == arr[index].silver && arr[i].bronze == arr[index].bronze) {
-            rank--;
-        }
-    }
-    cout << rank << '\n';
-    
+
     return 0;
 }
