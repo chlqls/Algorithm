@@ -7,12 +7,14 @@ using namespace std;
 int R, C, cnt = 0, MAX = 0;
 char A[20][20];
 bool visited[20][20];
-int ascii[26];
+bool ascii[26]; // 새로운 알파벳인지 확인용
 
 void dfs(int x, int y) {
     visited[x][y] = true;
+    
     char c = A[x][y];
-    ascii[c - 'A']++;
+    ascii[c - 'A'] = true;
+    
     cnt++;
     if (cnt > MAX) {
         MAX = cnt;
@@ -25,13 +27,15 @@ void dfs(int x, int y) {
         int a = x + dx[i];
         int b = y + dy[i];
 
-        if (!visited[a][b] && ascii[A[a][b] - 'A'] == 0 && a >= 0 && a < R && b >= 0 && b < C) {
+        if (!visited[a][b] && !ascii[A[a][b] - 'A'] && a >= 0 && a < R && b >= 0 && b < C) {
             dfs(a, b);
         }
     }
+    
+    // 백트래킹, 값 되돌리는 과정
     cnt--;
     visited[x][y] = false;
-    ascii[c - 'A']--;
+    ascii[c - 'A'] = false;
 }
 
 int main() {
@@ -56,4 +60,3 @@ int main() {
 
     return 0;
 }
-
